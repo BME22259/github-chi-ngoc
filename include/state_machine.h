@@ -3,13 +3,15 @@
 
 #include <Arduino.h>
 
+/* Type definitions ---------------------- */ 
 /* List of all states */
 typedef enum
 {
     S_IDLE, // default state
-    S_DEC,
+    S_RUN,
     S_INC,
-    S_RUN
+    S_DEC,
+    NUM_STATES
 } state_t;
 
 /* List of all events */
@@ -21,4 +23,23 @@ typedef enum
     NO_EVENT
 } event_t;
 
+typedef void (*stateFunction_t)(void);
+
+struct sStateAction
+{
+    stateFunction_t entryAction;
+    stateFunction_t doAction;
+    stateFunction_t exitAction;
+};
+
+extern struct sStateAction stateEntry[NUM_STATES];
+
+
+/* List of all states */
+
+void SM_runMachine(void);
+void SM_createState(state_t stateName,
+                  stateFunction_t entryFunction,
+                  stateFunction_t doFunction,
+                  stateFunction_t exitFunction);
 #endif
