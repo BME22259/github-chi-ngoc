@@ -3,7 +3,7 @@
 #include "syringe.h"
 #include "main.h"
 
-#define DEFAULT_FLOWRATE 10000 // default: 10 cc/min
+#define DEFAULT_FLOWRATE 10 // default: 10 cc/min
 
 /* Configure LCD */
 #define LCD_RS 22
@@ -123,7 +123,7 @@ void decreaseFlowrate(void)
 void startPumping(void)
 {
   // Calculate syringe speed, time one revolution and time one pulse
-  pumpSpeed = syringe_calculateSpeed(&syringe_pump_cfg, flowrate);
+  pumpSpeed = syringe_calculateSpeed(&syringe_pump_cfg, flowrate*1000);
   Serial.print("Speed in mm/min: ");
   Serial.println(pumpSpeed);
   timeOneRev = syringe_timeOneRev_s(&syringe_pump_cfg, pumpSpeed);
