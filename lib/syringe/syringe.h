@@ -3,16 +3,17 @@
 
 #include <Arduino.h>
 
-// Example for a 1.8-degree motor with 1/16 microstepping, 2mm pitch and no gear box.
-#define STEP_PER_REV 		200
-#define MICROSTEPPING 	16
-#define MICROSTEP_PER_REV 	(STEP_PER_REV * MICROSTEPPING) 
-#define SCREW_PITCH_MM 		2
-#define GEARBOX 			1
-#define SYRINGE_DIAMETER_MM 	19.55
+typedef struct
+{
+    uint16_t step_per_rev;     // stepper motor parameter, can be 200, 400 ...
+    uint8_t microstepping;     // driver mode, can be 2, 4, 8, 16, 32...
+    uint8_t screw_pitch_mm;    // pitch of the lead screw, can be 2mm, 5mm ...
+    uint8_t gear_ratio;        // gear ratio, by default is 1
+    float syringe_diameter_mm; // syringe diameter in mm
+} syringe_handle_t;
 
-float SP_calculateSpeed(float flowRate_mm3_min);
-float SP_timeOneRev_s(float speed_mm_min);
-uint32_t SP_timeOnePulse_us(float timeOneRev_s);
+float syringe_calculateSpeed(syringe_handle_t *, uint32_t);
+float syringe_timeOneRev_s(syringe_handle_t *, float);
+uint32_t syringe_timeOnePulse_us(syringe_handle_t *, float);
 
-#endif //SYRINGE_H__
+#endif // SYRINGE_H__

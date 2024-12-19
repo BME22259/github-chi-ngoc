@@ -32,7 +32,7 @@ struct sStateAction
     stateFunction_t exitAction;
 };
 
-extern struct sStateAction stateEntry[NUM_STATES];
+extern struct sStateAction state[NUM_STATES];
 
 
 /* List of all states */

@@ -9,7 +9,7 @@
 #include "state_machine.h"
 
 /* Extern variables ---------------------------- */
-struct sStateAction stateEntry[NUM_STATES];
+struct sStateAction state[NUM_STATES];
 
 /* Private functions ---------------------------*/
 
@@ -123,7 +123,7 @@ void SM_createState(state_t stateName,
                     stateFunction_t doFunction,
                     stateFunction_t exitFunction)
 {
-    stateEntry[stateName] = {entryFunction, doFunction, exitFunction};
+    state[stateName] = {entryFunction, doFunction, exitFunction};
 }
 
 /**
@@ -141,12 +141,12 @@ void SM_runMachine(void)
 
     if (checkStateTransition(currentState, &nextState)) // transistion has occurred
     {
-        if (stateEntry[currentState].exitAction != NULL)
-            stateEntry[currentState].exitAction();
-        if (stateEntry[nextState].entryAction != NULL)
-            stateEntry[nextState].entryAction();
+        if (state[currentState].exitAction != NULL)
+            state[currentState].exitAction();
+        if (state[nextState].entryAction != NULL)
+            state[nextState].entryAction();
         currentState = nextState; // update the state
     }
-    if (stateEntry[currentState].doAction != NULL)
-        stateEntry[currentState].doAction(); // run main action of the current state
+    if (state[currentState].doAction != NULL)
+        state[currentState].doAction(); // run main action of the current state
 }
